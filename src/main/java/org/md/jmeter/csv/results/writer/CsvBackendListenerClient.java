@@ -56,7 +56,7 @@ public class CsvBackendListenerClient extends AbstractBackendListenerClient impl
         arguments.addArgument(KEY_PATH, "the allowed format is -> C:\\jmeter_data.csv or /opt/results/jmeter_data.csv");
         arguments.addArgument(KEY_TIME_ZONE_ID, "UTC");
         arguments.addArgument(KEY_TIME_FORMAT, "yyyy-MM-dd'T'HH:mm:ss");
-        arguments.addArgument(KEY_SEPARATOR, "#|");
+        arguments.addArgument(KEY_SEPARATOR, "|");
         arguments.addArgument(KEY_SAVE_OK_SAMPLERS, "false");
         arguments.addArgument(KEY_RECORD_SUB_SAMPLES, "true");
         arguments.addArgument(KEY_USE_REGEX_FOR_SAMPLER_LIST, "true");
