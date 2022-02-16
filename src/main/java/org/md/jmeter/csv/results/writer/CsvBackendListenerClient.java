@@ -163,7 +163,7 @@ public class CsvBackendListenerClient extends AbstractBackendListenerClient impl
                 Result resultToWrite = ResultController.process(this.resultContext, result);
 
                 if (resultToWrite != null) {
-                    String separator = this.resultContext.getBackendListenerContext().getParameter(KEY_SEPARATOR);
+
                     String resultRow = ResultRow.getRow(this.resultContext, result);
                     Writer.getInstance(this.resultContext, LOGGER).collectData(resultRow);
                 }

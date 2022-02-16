@@ -73,7 +73,7 @@ public class Response {
 
     /**
      * Gets the assertion error message in case of error.
-     * @return theassertion error message in case of error.
+     * @return the assertion error message in case of error.
      */
     public String getAssertionError() {
         return this.assertionError;

@@ -98,19 +98,20 @@ public class Writer {
      */
     public synchronized void writeData() {
 
-        if (!this.isHeaderWritten)
-        {
-            this.writeHeader();
-            this.isHeaderWritten = true;
-        }
-
-        if (this.results.size() != 0) {
+         if (this.results.size() != 0) {
             try {
 
-                long start = System.currentTimeMillis();
-                String results = getString(this.results);
-                this.writeStrings(Objects.requireNonNull(results));
+                // Write header and setup the file while the first things writing - one time.
+                if (!this.isHeaderWritten)
+                {
+                    this.writeHeader();
+                    this.isHeaderWritten = true;
+                }
 
+                String results = getString(this.results);
+
+                long start = System.currentTimeMillis();
+                this.writeStrings(Objects.requireNonNull(results));
                 long end = System.currentTimeMillis();
 
                 LOGGER.info("Data has been written successfully, batch with size is --> " + this.results.size() + ", elapsed time is --> " + (end - start) + " ms");
@@ -119,9 +120,7 @@ public class Writer {
                 LOGGER.debug("Results have been cleaned");
 
             } catch (Exception e) {
-
                 LOGGER.error("Error has occurred, batch with size " + this.results.size() + " was not imported, see the details --> " + e.getMessage());
-
             }
         }
     }
@@ -135,7 +134,6 @@ public class Writer {
         LOGGER.info("The Path : " + path + " is going to be used.");
 
         this.csvFile = new File(path);
-
     }
 
     /**
@@ -150,7 +148,6 @@ public class Writer {
 
         this.writeStrings(header);
     }
-
 
     /**
      * Checks the batch size.
