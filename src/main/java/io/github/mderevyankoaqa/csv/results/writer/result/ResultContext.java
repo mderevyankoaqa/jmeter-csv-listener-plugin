@@ -1,4 +1,4 @@
-package org.md.jmeter.csv.results.writer.result;
+package io.github.mderevyankoaqa.csv.results.writer.result;
 
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
@@ -31,7 +31,7 @@ public class ResultContext {
     }
 
     /**
-     * Gets the time frame of the further {@link com.influxdb.client.write.Point}.
+     * Gets the time frame to put it in the row.
      * @return time represented in number.
      */
     public long getTimeToSet() {
@@ -39,7 +39,7 @@ public class ResultContext {
     }
 
     /**
-     * Sets time of the further {@link com.influxdb.client.write.Point}.
+     * Sets time of the further row.
      * @param timeToSet the time represented in number.
      */
     public void setTimeToSet(long timeToSet) {

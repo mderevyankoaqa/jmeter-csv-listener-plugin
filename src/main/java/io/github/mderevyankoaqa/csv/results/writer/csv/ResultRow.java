@@ -1,14 +1,13 @@
-package org.md.jmeter.csv.results.writer.csv;
+package io.github.mderevyankoaqa.csv.results.writer.csv;
 
+import io.github.mderevyankoaqa.csv.results.writer.config.Settings;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
-import org.md.jmeter.csv.results.writer.result.Request;
-import org.md.jmeter.csv.results.writer.result.Response;
-import org.md.jmeter.csv.results.writer.result.Result;
-import org.md.jmeter.csv.results.writer.result.ResultContext;
+import io.github.mderevyankoaqa.csv.results.writer.result.Request;
+import io.github.mderevyankoaqa.csv.results.writer.result.Response;
+import io.github.mderevyankoaqa.csv.results.writer.result.Result;
+import io.github.mderevyankoaqa.csv.results.writer.result.ResultContext;
 
 import java.util.concurrent.TimeUnit;
-
-import static org.md.jmeter.csv.results.writer.config.Settings.Parameters.*;
 
 /**
  * The logic to convert the {@link Result} to CSV row.
@@ -24,7 +23,7 @@ public class ResultRow {
      */
     public static String getRow(ResultContext resultContext, Result result)
     {
-        String separator = resultContext.getBackendListenerContext().getParameter(KEY_SEPARATOR);
+        String separator = resultContext.getBackendListenerContext().getParameter(Settings.Parameters.KEY_SEPARATOR);
         Request request = result.getRequest();
         Response response = result.getResponse();
 
@@ -61,9 +60,9 @@ public class ResultRow {
         var instance = java.time.Instant.ofEpochMilli(millis);
 
         var zonedDateTime = java.time.ZonedDateTime
-                .ofInstant(instance,java.time.ZoneId.of(context.getParameter(KEY_TIME_ZONE_ID)));
+                .ofInstant(instance,java.time.ZoneId.of(context.getParameter(Settings.Parameters.KEY_TIME_ZONE_ID)));
 
-        var formatter = java.time.format.DateTimeFormatter.ofPattern(context.getParameter(KEY_TIME_FORMAT));
+        var formatter = java.time.format.DateTimeFormatter.ofPattern(context.getParameter(Settings.Parameters.KEY_TIME_FORMAT));
 
         return zonedDateTime.format(formatter);
     }

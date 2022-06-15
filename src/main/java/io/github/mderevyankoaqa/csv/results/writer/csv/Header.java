@@ -1,4 +1,4 @@
-package org.md.jmeter.csv.results.writer.csv;
+package io.github.mderevyankoaqa.csv.results.writer.csv;
 
 /**
  * Stores to CSV row header.

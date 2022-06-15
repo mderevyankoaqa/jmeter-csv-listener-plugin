@@ -1,5 +1,27 @@
 # JMeter CSV listener plugin
 
+ ![](img/logo.png) 
+
+
+<p align="left">
+<img src="https://img.shields.io/github/license/mderevyankoaqa/jmeter-csv-listener-plugin?style=plastic">
+<img src ="https://img.shields.io/github/v/release/mderevyankoaqa/jmeter-csv-listener-plugin?style=plastic">
+<img src="https://img.shields.io/maven-central/v/io.github.mderevyankoaqa/jmeter-plugins-csv-listener?style=plastic">
+<img src="https://img.shields.io/github/downloads/mderevyankoaqa/jmeter-csv-listener-plugin/total?style=plastic">
+<img src="https://img.shields.io/github/stars/mderevyankoaqa/jmeter-csv-listener-plugin?style=plastic&color=gold">
+
+</p>
+
+<h3> 
+<details>
+<summary>Support my Ukrainian Family 
+</summary>
+ <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H8L62WL5HVD32">
+  <img src="https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png" alt="Donate with PayPal" />
+</a>
+</details>
+</h3> 
+
 ## Description
 The goal of the project is to save data to CSV like file with detailed information for the debugging purposes. In the CSV file you can expect to see time of the event with the following.
 
@@ -15,6 +37,8 @@ The details of the response:
 * Headers;	
 * Body;
 * Assertion message. 
+
+Click [here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/mderevyankoaqa/jmeter-csv-listener-plugin/tree/main/samplers/ExtraLogs.csv) to see an example of the result CSV file.
   
 So in the result of the test its possible to have the standard JMeter HTML report and CSV like file with failed or failed/successful requests details.
 
@@ -23,28 +47,43 @@ The supported versions:
 * Java 11 - make sure that you have it (its minimum version).
 * JMeter 5.4.3 only.
 
+## Maven Support
+Please see the latest release here https://search.maven.org/artifact/io.github.mderevyankoaqa/jmeter-plugins-csv-listener.
+
+## CI/CD Support
+The CI/CD can be done using [jmeter-maven-plugin](https://github.com/jmeter-maven-plugin/jmeter-maven-plugin)
+The example of the adding plugin to the project with the jmeter-maven:
+
+          <configuration>
+                <jmeterExtensions>
+                  <artifact>io.github.mderevyankoaqa:jmeter-plugins-csv-listener:1.2</artifact>
+                </jmeterExtensions>
+            </configuration>
+Some notes cab be found in the article [Adding jar's to the /lib/ext directory](https://github.com/jmeter-maven-plugin/jmeter-maven-plugin/wiki/Adding-Excluding-libraries-to-from-the-classpath).
+
 
 ## Deployment
 * Put `jmeter-plugin-csv-listener-<version>-all.jar` file from [Releases](https://github.com/mderevyankoaqa/jmeter-csv-listener-plugin/releases) to `~<JmeterPath<\lib\ext`;
 
-Note: "fatJar" gradle task should be used to create the package for the JMeter.
-
-![](img/deploy1.png)
+  Note: "jar" (recommended) or "shadowJar" gradle tasks can be used to create the package for the JMeter.
+  
+  ![](img/deploy1.png)
 
 * Run JMeter and select the test plan, Add-> Listener -> Backend Listener.
 
-![](img/deploy2.png)
+  ![](img/deploy2.png)
 
-* Select from the dropdown item with the name '`org.md.jmeter.csv.results.writer.CsvBackendListenerClient`'.
+* Select from the dropdown item with the name '`io.github.mderevyankoaqa.csv.results.writer.CsvBackendListenerClient`'.
 
-![](img/deploy3.png)
+  ![](img/deploy3.png)
 
 ## Plugin configuration
 
-![](img/deploy4.png)
+  ![](img/deploy4.png)
 
 Let’s explain the plugin fields:
-* `filePath` - the path to save the recorded data.
+* `filePath` - the path to save the recorded data. 
+  Notes: Can be set like this `${__P(errorLogsPath, ${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)}/ExtraLogs.csv)}` - allows JMeter generates the file near executed jmx.
 * `timeZoneId` - the time zone Id to save the time in the specific time zone, the default is UTC; the full list of the supported zones here - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones, the column "TZ database name".
 * `timeFormat` - the format to save the event id.
 * `csvSeparator` - the separator between the words; the default is "|". Since the requests, and the responses may have chars like this "," or ";" that way the not standard delimiter has been used.
