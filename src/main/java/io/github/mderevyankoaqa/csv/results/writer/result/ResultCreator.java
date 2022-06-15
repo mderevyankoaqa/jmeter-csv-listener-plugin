@@ -1,4 +1,4 @@
-package org.md.jmeter.csv.results.writer.result;
+package io.github.mderevyankoaqa.csv.results.writer.result;
 
 /**
  * Creates the {@link Result}.

@@ -1,6 +1,6 @@
-package org.md.jmeter.csv.results.writer.result;
+package io.github.mderevyankoaqa.csv.results.writer.result;
 
-import static org.md.jmeter.csv.results.writer.config.Settings.Parameters.KEY_SAVE_OK_SAMPLERS;
+import io.github.mderevyankoaqa.csv.results.writer.config.Settings;
 
 /**
  * Checks whether write {@link Result} or not.
@@ -16,7 +16,7 @@ public class ResultController {
      */
     public static Result process(ResultContext resultContext, Result result)
     {
-        boolean saveOK = resultContext.getBackendListenerContext().getBooleanParameter(KEY_SAVE_OK_SAMPLERS, false);
+        boolean saveOK = resultContext.getBackendListenerContext().getBooleanParameter(Settings.Parameters.KEY_SAVE_OK_SAMPLERS, false);
         if(saveOK && result.isSuccessful())
         {
             return result;

@@ -1,23 +1,22 @@
-package org.md.jmeter.csv.results.writer;
+package io.github.mderevyankoaqa.csv.results.writer;
 
+import io.github.mderevyankoaqa.csv.results.writer.config.Settings;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.visualizers.backend.AbstractBackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
-import org.md.jmeter.csv.results.writer.csv.ResultRow;
-import org.md.jmeter.csv.results.writer.csv.Writer;
-import org.md.jmeter.csv.results.writer.result.Result;
-import org.md.jmeter.csv.results.writer.result.ResultContext;
-import org.md.jmeter.csv.results.writer.result.ResultController;
-import org.md.jmeter.csv.results.writer.result.ResultCreator;
+import io.github.mderevyankoaqa.csv.results.writer.csv.ResultRow;
+import io.github.mderevyankoaqa.csv.results.writer.csv.Writer;
+import io.github.mderevyankoaqa.csv.results.writer.result.Result;
+import io.github.mderevyankoaqa.csv.results.writer.result.ResultContext;
+import io.github.mderevyankoaqa.csv.results.writer.result.ResultController;
+import io.github.mderevyankoaqa.csv.results.writer.result.ResultCreator;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import static org.md.jmeter.csv.results.writer.config.Settings.Parameters.*;
 
 /**
  * Backend listener that writes JMeter metrics to csv file, the idea writes the failed requests and their details.
@@ -53,16 +52,16 @@ public class CsvBackendListenerClient extends AbstractBackendListenerClient impl
     @Override
     public Arguments getDefaultParameters() {
         Arguments arguments = new Arguments();
-        arguments.addArgument(KEY_PATH, "the allowed format is -> C:\\jmeter_data.csv or /opt/results/jmeter_data.csv");
-        arguments.addArgument(KEY_TIME_ZONE_ID, "UTC");
-        arguments.addArgument(KEY_TIME_FORMAT, "yyyy-MM-dd'T'HH:mm:ss");
-        arguments.addArgument(KEY_SEPARATOR, "|");
-        arguments.addArgument(KEY_SAVE_OK_SAMPLERS, "false");
-        arguments.addArgument(KEY_RECORD_SUB_SAMPLES, "true");
-        arguments.addArgument(KEY_USE_REGEX_FOR_SAMPLER_LIST, "true");
-        arguments.addArgument(KEY_SAMPLERS_LIST, ".*");
-        arguments.addArgument(KEY_BATCH_SIZE, "2000");
-        arguments.addArgument(KEY_FLUSH_INTERVAL, "10000");
+        arguments.addArgument(Settings.Parameters.KEY_PATH, "the allowed format is -> C:\\jmeter_data.csv or /opt/results/jmeter_data.csv");
+        arguments.addArgument(Settings.Parameters.KEY_TIME_ZONE_ID, "UTC");
+        arguments.addArgument(Settings.Parameters.KEY_TIME_FORMAT, "yyyy-MM-dd'T'HH:mm:ss");
+        arguments.addArgument(Settings.Parameters.KEY_SEPARATOR, "|");
+        arguments.addArgument(Settings.Parameters.KEY_SAVE_OK_SAMPLERS, "false");
+        arguments.addArgument(Settings.Parameters.KEY_RECORD_SUB_SAMPLES, "true");
+        arguments.addArgument(Settings.Parameters.KEY_USE_REGEX_FOR_SAMPLER_LIST, "true");
+        arguments.addArgument(Settings.Parameters.KEY_SAMPLERS_LIST, ".*");
+        arguments.addArgument(Settings.Parameters.KEY_BATCH_SIZE, "2000");
+        arguments.addArgument(Settings.Parameters.KEY_FLUSH_INTERVAL, "10000");
 
         return arguments;
     }
@@ -87,7 +86,7 @@ public class CsvBackendListenerClient extends AbstractBackendListenerClient impl
         this.scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.SECONDS);
 
         // Indicates whether to write sub sample records to the database
-        this.recordSubSamples = Boolean.parseBoolean(context.getParameter(KEY_RECORD_SUB_SAMPLES, "false"));
+        this.recordSubSamples = Boolean.parseBoolean(context.getParameter(Settings.Parameters.KEY_RECORD_SUB_SAMPLES, "false"));
     }
 
     /**
@@ -198,7 +197,7 @@ public class CsvBackendListenerClient extends AbstractBackendListenerClient impl
                 Writer.getInstance(context, CsvBackendListenerClient.LOGGER).writeData();
 
             }
-        }, 0, context.getBackendListenerContext().getIntParameter(KEY_FLUSH_INTERVAL, 4000));
+        }, 0, context.getBackendListenerContext().getIntParameter(Settings.Parameters.KEY_FLUSH_INTERVAL, 4000));
     }
 
     /**
@@ -208,14 +207,14 @@ public class CsvBackendListenerClient extends AbstractBackendListenerClient impl
     private void parseSamplers(BackendListenerContext context) {
 
         //List of samplers to record.
-        String samplersList = context.getParameter(KEY_SAMPLERS_LIST, "");
+        String samplersList = context.getParameter(Settings.Parameters.KEY_SAMPLERS_LIST, "");
         this.samplersToFilter = new HashSet<>();
 
-        if (context.getBooleanParameter(KEY_USE_REGEX_FOR_SAMPLER_LIST, false)) {
+        if (context.getBooleanParameter(Settings.Parameters.KEY_USE_REGEX_FOR_SAMPLER_LIST, false)) {
             this.regexForSamplerList = samplersList;
         } else {
             this.regexForSamplerList = null;
-            String[] samplers = samplersList.split(context.getParameter(KEY_SEPARATOR));
+            String[] samplers = samplersList.split(context.getParameter(Settings.Parameters.KEY_SEPARATOR));
 
             this.samplersToFilter = new HashSet<>();
             Collections.addAll(this.samplersToFilter, samplers);

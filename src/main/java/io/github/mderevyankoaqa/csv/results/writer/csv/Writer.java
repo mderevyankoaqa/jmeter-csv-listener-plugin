@@ -1,6 +1,8 @@
-package org.md.jmeter.csv.results.writer.csv;
+package io.github.mderevyankoaqa.csv.results.writer.csv;
 
-import org.md.jmeter.csv.results.writer.result.ResultContext;
+import io.github.mderevyankoaqa.csv.results.writer.config.Settings;
+import io.github.mderevyankoaqa.csv.results.writer.result.ResultContext;
+import io.github.mderevyankoaqa.csv.results.writer.result.Result;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -12,10 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static org.md.jmeter.csv.results.writer.config.Settings.Parameters.*;
-
 /**
- * Represents the logic to write the {@link org.md.jmeter.csv.results.writer.result.Result} object to the file in CSV format.
+ * Represents the logic to write the {@link Result} object to the file in CSV format.
  * @author Michail Derevyanko.
  */
 public class Writer {
@@ -130,7 +130,7 @@ public class Writer {
      */
     public synchronized void setupClient() {
 
-        var path = this.resultContext.getBackendListenerContext().getParameter(KEY_PATH).trim();
+        var path = this.resultContext.getBackendListenerContext().getParameter(Settings.Parameters.KEY_PATH).trim();
         LOGGER.info("The Path : " + path + " is going to be used.");
 
         this.csvFile = new File(path);
@@ -143,7 +143,7 @@ public class Writer {
     {
         this.recreateFileIfExists(this.csvFile);
 
-        String header = Header.getHeader(this.resultContext.getBackendListenerContext().getParameter(KEY_SEPARATOR));
+        String header = Header.getHeader(this.resultContext.getBackendListenerContext().getParameter(Settings.Parameters.KEY_SEPARATOR));
         LOGGER.info("The header is : " + header);
 
         this.writeStrings(header);
@@ -153,7 +153,7 @@ public class Writer {
      * Checks the batch size.
      */
     private synchronized void checkBatchSize() {
-            if (this.results.size() >= this.resultContext.getBackendListenerContext().getIntParameter(KEY_BATCH_SIZE)) {
+            if (this.results.size() >= this.resultContext.getBackendListenerContext().getIntParameter(Settings.Parameters.KEY_BATCH_SIZE)) {
 
             LOGGER.info("Batch size protection has occurred.");
             this.writeData();
