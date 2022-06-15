@@ -1,8 +1,17 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version "7.1.2"
     id 'java'
+    id 'java-library'
     id 'project-report'
+    id 'maven-publish'
     id 'idea'
+    id 'signing'
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+
 }
 
 repositories {
@@ -14,9 +23,10 @@ repositories {
 }
 
 sourceCompatibility = 11
-version = '1.1'
+version = '1.2'
+group = 'io.github.mderevyankoaqa'
 def title = 'JMeterCSVListener'
-def archiveName = 'jmeter-plugin-csv-listener'
+def archiveName = 'jmeter-plugins-csv-listener'
 
 
 // There's a bug in JMeter leaving extra metadata right now. This is a workaround.
@@ -35,7 +45,6 @@ dependencies {
     implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_java', version: '5.4.3'
     implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_components', version: '5.4.3'
     implementation group: 'org.apache.jmeter', name: 'jorphan', version: '5.4.3'
-    implementation group: 'com.influxdb', name: 'influxdb-client-java', version: '4.0.0'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
 
@@ -53,13 +62,92 @@ jar {
     manifest {
         attributes 'Implementation-Title': title,
                 'Implementation-Version': archiveVersion,
-                'Main-Class': 'org.md.jmeter.csv.results.writer.CsvBackendListenerClient'
+                'Main-Class': 'io.github.mderevyankoaqa.csv.results.writer.CsvBackendListenerClient'
     }
+
+    archiveBaseName.set(archiveName)
 }
 
 shadowJar {
+    // Removes of the useless links.
+    minimize()
+    // Fix of the Class path contains multiple SLF4J bindings.
+    minimize
+            {
+                exclude(dependency('org.slf4j:.*:.*'))
+            }
     archiveBaseName.set(archiveName)
+
     manifest {
         inheritFrom project.tasks.jar.manifest
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.mderevyankoaqa'
+            artifactId = archiveName
+            version = version
+
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = archiveName
+                description = 'Influx DB v2.0 listener plugin for Apache JMeter. Provides the possibility to see the online dashboard (aggregation table, errors, the response body of failures).'
+                url = 'https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'mderevyanko'
+                        name = 'Mike Derevianko'
+                        email = 'm.v.derevyanko@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git:github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin.git'
+                    developerConnection = 'scm:git:ssh://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin.git'
+                    url = 'https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin'
+                }
+            }
+        }
+    }
+
+
+    repositories {
+        maven {
+            name = "OSSRH"
+
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+            credentials {
+                username = project.properties["ossrhUsername"]
+                password = project.properties["ossrhPassword"]
+            }
+        }
+    }
+}
+
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
