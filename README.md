@@ -22,6 +22,17 @@
 </details>
 </h3> 
 
+<h3>
+<details>
+<summary>Like what you see?</summary>
+<br>
+   <a href="https://www.buymeacoffee.com/mvderevyanko">
+      <img alt="Coffee2" src="https://raw.githubusercontent.com/mderevyankoaqa/jmeter-elk/main/img/Coffee2.png"  width="150">
+
+</a>
+</details>
+</h3>
+
 ## Description
 The goal of the project is to save data to CSV like file with detailed information for the debugging purposes. In the CSV file you can expect to see time of the event with the following.
 
