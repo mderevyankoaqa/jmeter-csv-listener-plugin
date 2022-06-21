@@ -23,7 +23,7 @@ repositories {
 }
 
 sourceCompatibility = 11
-version = '1.2'
+version = '1.3'
 group = 'io.github.mderevyankoaqa'
 def title = 'JMeterCSVListener'
 def archiveName = 'jmeter-plugins-csv-listener'
@@ -41,10 +41,10 @@ class JMeterRule implements ComponentMetadataRule {
 }
 
 dependencies {
-    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.4.3'
-    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_java', version: '5.4.3'
-    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_components', version: '5.4.3'
-    implementation group: 'org.apache.jmeter', name: 'jorphan', version: '5.4.3'
+    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.5'
+    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_java', version: '5.5'
+    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_components', version: '5.5'
+    implementation group: 'org.apache.jmeter', name: 'jorphan', version: '5.5'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
 

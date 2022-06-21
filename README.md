@@ -14,7 +14,7 @@
 
 <h3> 
 <details>
-<summary>Support my Ukrainian Family 
+<summary>Support my Ukrainian Family ❤️
 </summary>
  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H8L62WL5HVD32">
   <img src="https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png" alt="Donate with PayPal" />
@@ -24,7 +24,7 @@
 
 <h3>
 <details>
-<summary>Like what you see?</summary>
+<summary>Like what you see? 😍 </summary>
 <br>
    <a href="https://www.buymeacoffee.com/mvderevyanko">
       <img alt="Coffee2" src="https://raw.githubusercontent.com/mderevyankoaqa/jmeter-elk/main/img/Coffee2.png"  width="150">
@@ -56,7 +56,7 @@ So in the result of the test its possible to have the standard JMeter HTML repor
 ## Compatibility
 The supported versions:
 * Java 11 - make sure that you have it (its minimum version).
-* JMeter 5.4.3 only.
+* JMeter 5.5.0 only.
 
 ## Maven Support
 Please see the latest release here https://search.maven.org/artifact/io.github.mderevyankoaqa/jmeter-plugins-csv-listener.
