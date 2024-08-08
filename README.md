@@ -56,7 +56,7 @@ So in the result of the test its possible to have the standard JMeter HTML repor
 ## Compatibility
 The supported versions:
 * Java 11 - make sure that you have it (its minimum version).
-* JMeter 5.5.0 only.
+* JMeter 5.6.3 only.
 
 ## Maven Support
 Please see the latest release here https://search.maven.org/artifact/io.github.mderevyankoaqa/jmeter-plugins-csv-listener.
@@ -67,7 +67,7 @@ The example of the adding plugin to the project with the jmeter-maven:
 
           <configuration>
                 <jmeterExtensions>
-                  <artifact>io.github.mderevyankoaqa:jmeter-plugins-csv-listener:1.2</artifact>
+                  <artifact>io.github.mderevyankoaqa:jmeter-plugins-csv-listener:1.4</artifact>
                 </jmeterExtensions>
             </configuration>
 Some notes cab be found in the article [Adding jar's to the /lib/ext directory](https://github.com/jmeter-maven-plugin/jmeter-maven-plugin/wiki/Adding-Excluding-libraries-to-from-the-classpath).

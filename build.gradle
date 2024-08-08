@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version "7.1.2"
+    id 'com.github.johnrengelman.shadow' version "8.1.1"
     id 'java'
     id 'java-library'
     id 'project-report'
@@ -17,35 +17,35 @@ java {
 repositories {
     mavenCentral()
             {
-
                 mavenCentral()
             }
 }
 
 sourceCompatibility = 11
-version = '1.3'
+version = '1.4'
 group = 'io.github.mderevyankoaqa'
 def title = 'JMeterCSVListener'
 def archiveName = 'jmeter-plugins-csv-listener'
 
 
 // There's a bug in JMeter leaving extra metadata right now. This is a workaround.
-class JMeterRule implements ComponentMetadataRule {
-    void execute(ComponentMetadataContext context) {
-        context.details.allVariants {
-            withDependencies {
-                removeAll { it.group == "org.apache.jmeter" && it.name == "bom" }
+abstract class JMeterRule implements ComponentMetadataRule {
+    @Override
+    void execute(ComponentMetadataContext context) { // This might trigger a lint warning, but it is correct.
+        context.details.allVariants { variant ->
+            variant.withDependencies { dependencies ->
+                dependencies.removeAll { it.group == "org.apache.jmeter" && it.name == "bom" }
             }
         }
     }
 }
 
 dependencies {
-    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.5'
-    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_java', version: '5.5'
-    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_components', version: '5.5'
-    implementation group: 'org.apache.jmeter', name: 'jorphan', version: '5.5'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_core', version: '5.6.3'
+    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_java', version: '5.6.3'
+    implementation group: 'org.apache.jmeter', name: 'ApacheJMeter_components', version: '5.6.3'
+    implementation group: 'org.apache.jmeter', name: 'jorphan', version: '5.6.3'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
 
 
     components {
@@ -102,7 +102,7 @@ publishing {
             pom {
                 name = archiveName
                 description = 'Influx DB v2.0 listener plugin for Apache JMeter. Provides the possibility to see the online dashboard (aggregation table, errors, the response body of failures).'
-                url = 'https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin'
+                url = 'https://github.com/mderevyankoaqa/jmeter-csv-listener-plugin'
 
                 licenses {
                     license {
@@ -118,9 +118,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git:github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin.git'
-                    developerConnection = 'scm:git:ssh://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin.git'
-                    url = 'https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin'
+                    connection = 'scm:git:git:github.com/mderevyankoaqa/jmeter-csv-listener-plugin.git'
+                    developerConnection = 'scm:git:ssh://github.com/mderevyankoaqa/jmeter-csv-listener-plugin.git'
+                    url = 'https://github.com/mderevyankoaqa/jmeter-csv-listener-plugin'
                 }
             }
         }
